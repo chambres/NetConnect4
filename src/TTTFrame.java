@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 
-public class TTTFrame extends JFrame implements KeyListener {
+public class TTTFrame extends JFrame implements KeyListener , MouseListener{
     private String text = "";
     private char player ='x';
     private char turn = 'x';
@@ -18,6 +20,7 @@ public class TTTFrame extends JFrame implements KeyListener {
         this.gameData = gameData;
         this.oos = oos;
         addKeyListener(this);
+        addMouseListener(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(100*7,100*7);
     }
@@ -90,6 +93,39 @@ public class TTTFrame extends JFrame implements KeyListener {
         repaint();
     }
 
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        try{
+        switch((e.getX()/100)){
+            case 0:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"0"));
+                break;
+            case 1:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"1"));
+                break;
+            case 2:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"2"));
+                break;
+            case 3:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"3"));
+                break;
+            case 4:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"4"));
+                break;
+            case 5:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"5"));
+                break;
+            case 6:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"6"));
+                break;
+        }
+        }
+        catch(Exception ex)
+        {}
+        
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         System.out.println("typed"+e.getKeyChar());
@@ -132,6 +168,8 @@ public class TTTFrame extends JFrame implements KeyListener {
         {}
     }
 
+
+
     public void reset()
     {
         gameData.reset();
@@ -153,5 +191,28 @@ public class TTTFrame extends JFrame implements KeyListener {
             return 'o';
         else
             return 'x';
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+        
     }
 }
