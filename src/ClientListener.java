@@ -46,7 +46,11 @@ public class ClientListener implements Runnable{
                 {
                     int c = Integer.parseInt(com.getData().substring(0,1));
                     int r = Integer.parseInt(com.getData().substring(2,3));
+
+
                     char letter = com.getData().charAt(3);
+
+                    System.out.println("hello" + c + letter + r);
                     frame.makeMove(c,r,letter);
                 }
                 if (com.getCommand() == CommandFromServer.X_WINS) {

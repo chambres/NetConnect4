@@ -30,6 +30,9 @@ public class ServersListener implements Runnable{
                     if (com.getCommand() == CommandFromClient.MOVE && player == turn) {
                         int c = Integer.parseInt(com.getData().substring(0, 1));
                         int r = Integer.parseInt(com.getData().substring(2));
+
+                        System.out.println("column :"  + c);
+
                         if (gameData.getGrid()[r][c] == ' ') {
                             gameData.getGrid()[r][c] = player;
                             for (ObjectOutputStream os : outputStreams)
