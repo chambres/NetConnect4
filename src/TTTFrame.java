@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 
-public class TTTFrame extends JFrame implements KeyListener , MouseListener{
+public class TTTFrame extends JFrame implements KeyListener, MouseListener {
     private String text = "";
     private char player ='x';
     private char turn = 'x';
@@ -29,21 +29,26 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
     {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
-
-
         g.setColor(Color.RED);
         g.setFont(new Font("Times New Roman",Font.BOLD,30));
-        g.drawString(text,959,50);
+        g.drawString(text,20,50);
 
-        g.setColor(Color.RED);
-
+        // g.setColor(Color.RED);
+        // for(int y =0;y<=1; y++)
+        //     g.drawLine(0,(y+1)*133+60,getWidth(),(y+1)*133+60);
+        // for(int x =0;x<=1; x++)
+        //     g.drawLine((x+1)*133,60,(x+1)*133,getHeight());
+ 
         
+        
+    
+        g.setColor(Color.white);
         //draw 7 circles evenly spaced for 6 rows
         for(int r=0; r<6; r++)
         {
             for(int c=0; c<7; c++)
             {
-                
+                g.fillOval(c*100+10,r*100+60+10,100-20,100-20);
             }
         }
 
@@ -62,7 +67,7 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
                     g.fillOval(c*100+10,r*100+60+10,100-20,100-20);
                 }
             }
-        }   
+        }  
     }
 
 
@@ -91,39 +96,6 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
     {
         gameData.getGrid()[r][c] = letter;
         repaint();
-    }
-
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        try{
-        switch((e.getX()/100)){
-            case 0:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"0"));
-                break;
-            case 1:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"1"));
-                break;
-            case 2:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"2"));
-                break;
-            case 3:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"3"));
-                break;
-            case 4:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"4"));
-                break;
-            case 5:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"5"));
-                break;
-            case 6:
-                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"6"));
-                break;
-        }
-        }
-        catch(Exception ex)
-        {}
-        
     }
 
     @Override
@@ -168,8 +140,6 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
         {}
     }
 
-
-
     public void reset()
     {
         gameData.reset();
@@ -193,12 +163,43 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
             return 'x';
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e.getX()/100);
+        try{
+        switch((e.getX()/100)){
+            case 0:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"0,0"));
+                break;
+            case 1:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"1,0"));
+                break;
+            case 2:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"2,0"));
+                break;
+            case 3:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"3,0"));
+                break;
+            case 4:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"4,0"));
+                break;
+            case 5:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"5,0"));
+                break;
+            case 6:
+                oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"6,0"));
+                break;
+        }
+        }
+        catch(Exception ex)
+        {System.out.println(ex);}
+        
     }
 
-    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -213,6 +214,7 @@ public class TTTFrame extends JFrame implements KeyListener , MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
 
-        
     }
+
+    
 }

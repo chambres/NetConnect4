@@ -17,12 +17,12 @@ public class ClientListener implements Runnable{
                 CommandFromServer com = (CommandFromServer) (ois.readObject());
 
                 if (com.getCommand() == CommandFromServer.CONNECTED_AS_X) {
-                    frame.setText("Waiting for O to connect");
+                    frame.setText("Waiting for RED to connect");
                     frame.setPlayer('x');
                     frame.setTurn('x');
                 }
                 if (com.getCommand() == CommandFromServer.CONNECTED_AS_O) {
-                    frame.setText("X's Turn");
+                    frame.setText("Blue's Turn");
                     frame.setPlayer('o');
                     frame.setTurn('x');
                 }
@@ -32,13 +32,13 @@ public class ClientListener implements Runnable{
                     if(frame.getPlayer()=='x')
                         frame.setText("It is your turn");
                     else
-                        frame.setText("X's Turn");
+                        frame.setText("Blue's Turn");
                 }
                 if (com.getCommand() == CommandFromServer.O_TURN)
                 {
                     frame.setTurn('x');
                     if(frame.getPlayer()=='x')
-                        frame.setText("O's Turn");
+                        frame.setText("Red's Turn");
                     else
                         frame.setText("It is your turn");
                 }
@@ -46,19 +46,15 @@ public class ClientListener implements Runnable{
                 {
                     int c = Integer.parseInt(com.getData().substring(0,1));
                     int r = Integer.parseInt(com.getData().substring(2,3));
-
-
                     char letter = com.getData().charAt(3);
-
-                    System.out.println("hello" + c + letter + r);
                     frame.makeMove(c,r,letter);
                 }
                 if (com.getCommand() == CommandFromServer.X_WINS) {
-                    frame.setText("X WINS!!! (R to restart)");
+                    frame.setText("BLUE WINS!!! (R to restart)");
 
                 }
                 if (com.getCommand() == CommandFromServer.O_WINS) {
-                    frame.setText("O WINS!!! (R to restart)");
+                    frame.setText("RED WINS!!! (R to restart)");
 
                 }
                 if (com.getCommand() == CommandFromServer.TIE) {

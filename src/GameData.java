@@ -1,12 +1,12 @@
-import java.util.Random;
-
 public class GameData
 {
-    private char[][] grid = new char[6][7];
-
-    public GameData() {
+    char[][] grid = new char[6][7];
+    GameData()
+    {
         reset();
     }
+
+
 
     public char[][] getGrid()
     {
@@ -15,28 +15,26 @@ public class GameData
 
     public void reset()
     {
-        Random rd = new Random();
-        for(int r=0; r<grid.length; r++) {
-            for(int c=0; c<grid[0].length; c++) {
-                
-                grid[r][c]= rd.nextBoolean() ? 'x' : 'o';
-                
 
-                
-            }
-        }
+        grid = new char[6][7];
+        for(int r=0;r<grid.length; r++)
+            for(int c=0; c<grid[0].length; c++)
+                grid[r][c]=' ';
+    
     }
 
+   
     public boolean isCat()
     {
-        for(int r=0; r<grid.length; r++) {
-            for(int c=0; c<grid[0].length; c++) {
-                if(grid[r][c] == ' ') {
+        for(int i = 0 ; i < grid.length ; i++)
+            for(int j = 0 ; j < grid[0].length ; j++)
+                if(grid[i][j] == ' ')
                     return false;
-                }
-            }
-        }
-        return true;
+        if(isWinner('X') || isWinner('O'))
+            return false;
+
+            
+        return true;    
     }
 
     public boolean isWinner(char letter)
@@ -79,4 +77,5 @@ public class GameData
 
         return false;
     }
+
 }

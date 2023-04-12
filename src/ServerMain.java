@@ -29,6 +29,6 @@ public class ServerMain
 
         }
         catch (Exception e)
-        {System.out.println(e);}
+        {}
     }
 }

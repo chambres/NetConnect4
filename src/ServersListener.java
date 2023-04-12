@@ -28,35 +28,64 @@ public class ServersListener implements Runnable{
                 if (!gameData.isWinner('x') && !gameData.isWinner('o')
                         && !gameData.isCat()) {
                     if (com.getCommand() == CommandFromClient.MOVE && player == turn) {
+
+                        
+
                         int c = Integer.parseInt(com.getData().substring(0, 1));
                         int r = Integer.parseInt(com.getData().substring(2));
 
-                        System.out.println("column :"  + c);
+                        for (int row = gameData.getGrid().length-1; row >= 0; row--){
+                            if(gameData.getGrid()[row][c] == ' '){
+                                
+                                gameData.getGrid()[row][c] = player;
 
-                        if (gameData.getGrid()[r][c] == ' ') {
-                            gameData.getGrid()[r][c] = player;
-                            for (ObjectOutputStream os : outputStreams)
-                                os.writeObject(new CommandFromServer(CommandFromServer.MOVE, com.getData() + player));
-                            if (turn == 'x') {
-                                turn = 'o';
+
+
+
+                                        //print grid
+                                for (int rr = 0; rr < gameData.getGrid().length; rr++) {
+                                    for (int cc = 0; cc < gameData.getGrid()[r].length; cc++) {
+                                        System.out.print(gameData.getGrid()[rr][cc] + " ");
+                                    }
+                                    System.out.println();
+                                }
+
+                                System.out.println(";"+com.getData()+player+";");
                                 for (ObjectOutputStream os : outputStreams)
-                                    os.writeObject(new CommandFromServer(CommandFromServer.O_TURN, ""));
-                            } else {
-                                turn = 'x';
-                                for (ObjectOutputStream os : outputStreams)
-                                    os.writeObject(new CommandFromServer(CommandFromServer.X_TURN, ""));
+                                    os.writeObject(new CommandFromServer(CommandFromServer.MOVE, String.format("%d,%d%s", c, row, player)));
+                                if (turn == 'x') {
+                                    turn = 'o';
+                                    for (ObjectOutputStream os : outputStreams)
+                                        os.writeObject(new CommandFromServer(CommandFromServer.O_TURN, ""));
+                                } else {
+                                    turn = 'x';
+                                    for (ObjectOutputStream os : outputStreams)
+                                        os.writeObject(new CommandFromServer(CommandFromServer.X_TURN, ""));
+                                }
+
+                                if (gameData.isWinner('x'))
+                                    for (ObjectOutputStream os : outputStreams)
+                                        os.writeObject(new CommandFromServer(CommandFromServer.X_WINS, ""));
+                                if (gameData.isWinner('o'))
+                                    for (ObjectOutputStream os : outputStreams)
+                                        os.writeObject(new CommandFromServer(CommandFromServer.O_WINS, ""));
+                                if (gameData.isCat())
+                                    for (ObjectOutputStream os : outputStreams)
+                                        os.writeObject(new CommandFromServer(CommandFromServer.TIE, ""));
+                                    break;
+
+
+
+
+                                
                             }
-
-                            if (gameData.isWinner('x'))
-                                for (ObjectOutputStream os : outputStreams)
-                                    os.writeObject(new CommandFromServer(CommandFromServer.X_WINS, ""));
-                            if (gameData.isWinner('o'))
-                                for (ObjectOutputStream os : outputStreams)
-                                    os.writeObject(new CommandFromServer(CommandFromServer.O_WINS, ""));
-                            if (gameData.isCat())
-                                for (ObjectOutputStream os : outputStreams)
-                                    os.writeObject(new CommandFromServer(CommandFromServer.TIE, ""));
                         }
+
+
+                        // if (gameData.getGrid()[r][c] == ' ') {
+                        //     gameData.getGrid()[r][c] = player;
+                            
+                        // }
                     }
                 } else if (com.getCommand() == CommandFromClient.RESTART) {
                     if (player == 'x') {
