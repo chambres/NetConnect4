@@ -31,7 +31,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/K1331528/Downloads/Networking Examples/Networking Examples/NetTacToe&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.ClientMain">
+  <component name="RunManager">
     <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ClientMain" />
       <module name="NetTacToe" />

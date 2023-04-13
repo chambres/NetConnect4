@@ -10,26 +10,23 @@ public class Main {
         
                 executor.execute(() -> {
                     // first function running in its own thread
-                    System.out.println("Function 1 started");
+                    System.out.println("Server Started");
                     // do some work here
                     server.main(args);
-                    System.out.println("Function 1 finished");
                 });
         
                 executor.execute(() -> {
                     // second function running in its own thread
-                    System.out.println("Function 2 started");
+                    System.out.println("Client 1 started");
                     // do some work here
                     client.main(args);
-                    System.out.println("Function 2 finished");
                 });
         
                 executor.execute(() -> {
                     // third function running in its own thread
-                    System.out.println("Function 3 started");
+                    System.out.println("Client 2 Started");
                     // do some work here
                     client2.main(args);
-                    System.out.println("Function 3 finished");
                 });
         
                 executor.shutdown();
