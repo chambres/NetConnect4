@@ -15,7 +15,9 @@ public class ClientListener implements Runnable{
         {
             while(true) {
                 CommandFromServer com = (CommandFromServer) (ois.readObject());
-
+                if(com.getCommand() == CommandFromServer.DISCONNECT){
+                    frame.disconnectMessage();
+                }
                 if (com.getCommand() == CommandFromServer.CONNECTED_AS_X) {
                     frame.setText("Waiting for RED to connect");
                     frame.setPlayer('x');
@@ -62,12 +64,13 @@ public class ClientListener implements Runnable{
                 }
                 if(com.getCommand() == CommandFromServer.RESTART)
                     frame.reset();
+
             }
         }
         catch(Exception e)
         {
-            System.out.println("Error");
-            System.exit(0);
+            System.out.println("?");
+            //System.exit(0);
         }
     }
 }

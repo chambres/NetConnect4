@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ public class ServersListener implements Runnable{
     private static char turn = 'x';
     private GameData gameData;
     private static boolean xRestart, oRestart;
+
+    boolean xConnected, yConnected;
 
     public ServersListener(GameData gameData,ObjectInputStream ois, ObjectOutputStream oos, char player) {
         this.ois = ois;
@@ -111,8 +114,19 @@ public class ServersListener implements Runnable{
         }
         catch(Exception e)
         {
-            System.out.println("Error");
-            System.exit(0);
+            System.out.println(e);
+            System.out.println("Disconnection");
+            try{
+                outputStreams.get(0).writeObject(new CommandFromServer(CommandFromServer.DISCONNECT, ""));
+            }catch (Exception ef ){
+                try {
+                    outputStreams.get(1).writeObject(new CommandFromServer(CommandFromServer.DISCONNECT, ""));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            //System.exit(0);
         }
     }
 }

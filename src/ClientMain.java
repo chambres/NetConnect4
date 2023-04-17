@@ -14,7 +14,8 @@ public class ClientMain
 
         Scanner keyboard = new Scanner(System.in);
         //System.out.print("Enter the ip address of the server: ");
-        String ip = "127.0.0.1";//keyboard.next();
+        //String ip = keyboard.nextLine();
+        String ip = "127.0.0.1";
 
         try {
             Socket socket = new Socket(ip,8002);

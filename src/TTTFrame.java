@@ -1,11 +1,14 @@
 import javax.swing.*;
+import javax.swing.text.Style;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.SocketException;
 import java.util.Collections;
 
 public class TTTFrame extends JFrame implements KeyListener, MouseListener {
@@ -23,6 +26,7 @@ public class TTTFrame extends JFrame implements KeyListener, MouseListener {
         addMouseListener(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(100*7,100*7);
+
     }
 
     public void paint(Graphics g)
@@ -131,13 +135,31 @@ public class TTTFrame extends JFrame implements KeyListener, MouseListener {
                     oos.writeObject(new CommandFromClient(CommandFromClient.MOVE,"2,2"));
                     break;
                 case 'r':
-                    setText("Waiting for restart from "+other());
+                    switch(other()){
+                        case 'x':
+                            setText("Waiting for restart from Blue");
+                        default:
+                            setText("Waiting for restart from Red");
+
+                    }
+
                     oos.writeObject(new CommandFromClient(CommandFromClient.RESTART,""));
                     break;
             }
         }
         catch(Exception ex)
         {}
+    }
+
+
+
+    void disconnectMessage() throws InterruptedException {
+        for(int i = 5; i >= 1; i--){
+            setText("Disconnect in " + i);
+            Thread.sleep(1000);
+        }
+        System.exit(0);
+
     }
 
     public void reset()
